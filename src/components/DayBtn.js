@@ -26,7 +26,7 @@ const DayBtn = ({ date, year, month }) => {
 
   if (!pickupDate && !returnDate) {
     if (disabled) {
-      classs = "w-full h-full cursor-pointer bg-slate-100 text-slate-400";
+      classs = "w-full h-full  bg-slate-100 text-slate-400";
     } else {
       classs = "w-full h-full cursor-pointer hover:bg-slate-100";
     }
@@ -35,7 +35,7 @@ const DayBtn = ({ date, year, month }) => {
       classs = "w-full h-full cursor-pointer bg-green-500";
     } else {
       if (disabled) {
-        classs = "w-full h-full cursor-pointer bg-slate-100 text-slate-400";
+        classs = "w-full h-full bg-slate-100 text-slate-400";
       } else {
         classs = "w-full h-full cursor-pointer hover:bg-slate-100";
       }
@@ -49,7 +49,7 @@ const DayBtn = ({ date, year, month }) => {
       classs = "w-full h-full cursor-pointer bg-green-500";
     } else {
       if (disabled) {
-        classs = "w-full h-full cursor-pointer bg-slate-100 text-slate-400";
+        classs = "w-full h-full bg-slate-100 text-slate-400";
       } else {
         classs = "w-full h-full cursor-pointer hover:bg-slate-100";
       }
