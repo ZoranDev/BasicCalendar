@@ -51,7 +51,7 @@ function App() {
   return (
     <div className="w-full h-screen bg-emerald-500 flex justify-center items-center">
       <CalendarProvider>
-        <div className="bg-white flex flex-col sm:flex-row justify-center items-baseline p-4">
+        <div className="sm:h-90 bg-white flex flex-col sm:flex-row justify-center items-baseline p-4">
           <Calendar
             year={allMonthsToDisplay[indexCalendar.calendar1].year}
             month={allMonthsToDisplay[indexCalendar.calendar1].month}
