@@ -36,7 +36,7 @@ const Calendar = ({ year, month, calendar, moveCalendar }) => {
   const onClick = () => moveCalendar(calendar);
 
   return (
-    <div className="h-80 sm:h-auto  mt-3 mb-3 sm:ml-3 sm:mr-3">
+    <div className="h-[300px] mb-3 sm:ml-3 sm:mr-3">
       <div className="flex justify-center items-center text-xl mb-3 relative">
         {calendar === "calendar1" && (
           <FaAngleLeft

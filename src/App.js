@@ -56,10 +56,10 @@ function App() {
   };
 
   return (
-    <div className="w-full h-screen bg-emerald-500 flex justify-center items-center">
+    <div className="w-full min-h-screen  bg-emerald-500 flex justify-center items-center overflow-hidden">
       <CalendarProvider>
         {allMonthsToDisplay.length !== 0 && (
-          <div className="sm:h-[350px] bg-white flex flex-col sm:flex-row justify-center items-baseline p-4">
+          <div className="max-h-full overflow-auto sm:h-[350px] bg-white flex flex-col sm:flex-row justify-center items-baseline p-4">
             <Calendar
               year={allMonthsToDisplay[indexCalendar.calendar1].year}
               month={allMonthsToDisplay[indexCalendar.calendar1].month}
