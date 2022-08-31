@@ -23,7 +23,7 @@ const Calendar = ({ year, month, calendar, moveCalendar }) => {
     return new Date(year, month + 1, 0).getDate();
   };
 
-  // Get position of first day in ween
+  // Get position of first day in week
   const firstDay = new Date(year, month, 0).getDay(); // izmedju 0-6
 
   // Get number of days in current month
@@ -32,13 +32,16 @@ const Calendar = ({ year, month, calendar, moveCalendar }) => {
   // Date - between 1 and length of month
   let date = 1;
 
+  //onClick function
+  const onClick = () => moveCalendar(calendar);
+
   return (
     <div className="h-80 sm:h-auto  mt-3 mb-3 sm:ml-3 sm:mr-3">
       <div className="flex justify-center items-center text-xl mb-3 relative">
         {calendar === "calendar1" && (
           <FaAngleLeft
             className="text-xl absolute left-0 hover:scale-110 cursor-pointer "
-            onClick={() => moveCalendar(calendar)}
+            onClick={onClick}
           />
         )}
 
@@ -48,7 +51,7 @@ const Calendar = ({ year, month, calendar, moveCalendar }) => {
         {calendar === "calendar2" && (
           <FaAngleRight
             className="text-xl absolute right-0 hover:scale-110 cursor-pointer "
-            onClick={() => moveCalendar(calendar)}
+            onClick={onClick}
           />
         )}
       </div>
@@ -67,7 +70,7 @@ const Calendar = ({ year, month, calendar, moveCalendar }) => {
 
         <tbody>
           {[1, 2, 3, 4, 5, 6].map((row, index) => {
-            // Positioning first day of month absed on week day
+            // Positioning first day of month based on week day
             if (row === 1) {
               return (
                 <tr key={index}>

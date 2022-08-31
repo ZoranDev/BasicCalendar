@@ -1,6 +1,6 @@
 import { CalendarProvider } from "./context/CalendarContext";
 import Calendar from "./components/Calendar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   // Treba dobiti niz na osnovu kojeg ce se prikazivati kalendari
@@ -9,37 +9,44 @@ function App() {
     calendar2: 1,
   });
 
-  let allMonthsToDisplay = [];
+  //State for allMonthsToDisplay - (months to the end of the year and next year)
+  const [allMonthsToDisplay, setAllMonthsToDisplay] = useState([]);
 
-  for (let i = 0; i < 12 - new Date().getMonth(); i++) {
-    allMonthsToDisplay.push({
-      year: new Date().getFullYear(),
-      month: new Date().getMonth() + i,
-    });
-  }
+  // getAllDisplayedMonthsArray function
+  const getAllDisplayedMonthsArray = () => {
+    return Array(12 - new Date().getMonth() + 12)
+      .fill(null)
+      .map((u, i) => {
+        if (i < 12 - new Date().getMonth()) {
+          return {
+            year: new Date().getFullYear(),
+            month: new Date().getMonth() + i,
+          };
+        } else {
+          return {
+            year: new Date().getFullYear() + 1,
+            month: new Date().getMonth() + i - 12,
+          };
+        }
+      });
+  };
 
-  for (let i = 0; i < 12; i++) {
-    allMonthsToDisplay.push({
-      year: new Date().getFullYear() + 1,
-      month: i,
-    });
-  }
+  // On render component set this state
+  useEffect(() => {
+    setAllMonthsToDisplay(getAllDisplayedMonthsArray());
+  }, []);
 
   //moveCalendar
   const moveCalendar = (calendar) => {
     if (calendar === "calendar1") {
-      if (indexCalendar.calendar1 <= 0) {
-        console.log("cannot move left");
-      } else {
+      if (indexCalendar.calendar1 > 0) {
         setIndexCalendar({
           calendar1: indexCalendar.calendar1 - 1,
           calendar2: indexCalendar.calendar2 - 1,
         });
       }
     } else {
-      if (indexCalendar.calendar2 >= allMonthsToDisplay.length - 1) {
-        console.log("cannot move right");
-      } else {
+      if (indexCalendar.calendar2 < allMonthsToDisplay.length - 1) {
         setIndexCalendar({
           calendar1: indexCalendar.calendar1 + 1,
           calendar2: indexCalendar.calendar2 + 1,
@@ -51,20 +58,22 @@ function App() {
   return (
     <div className="w-full h-screen bg-emerald-500 flex justify-center items-center">
       <CalendarProvider>
-        <div className="sm:h-90 bg-white flex flex-col sm:flex-row justify-center items-baseline p-4">
-          <Calendar
-            year={allMonthsToDisplay[indexCalendar.calendar1].year}
-            month={allMonthsToDisplay[indexCalendar.calendar1].month}
-            calendar={"calendar1"}
-            moveCalendar={moveCalendar}
-          />
-          <Calendar
-            year={allMonthsToDisplay[indexCalendar.calendar2].year}
-            month={allMonthsToDisplay[indexCalendar.calendar2].month}
-            calendar={"calendar2"}
-            moveCalendar={moveCalendar}
-          />
-        </div>
+        {allMonthsToDisplay.length !== 0 && (
+          <div className="sm:h-[350px] bg-white flex flex-col sm:flex-row justify-center items-baseline p-4">
+            <Calendar
+              year={allMonthsToDisplay[indexCalendar.calendar1].year}
+              month={allMonthsToDisplay[indexCalendar.calendar1].month}
+              calendar={"calendar1"}
+              moveCalendar={moveCalendar}
+            />
+            <Calendar
+              year={allMonthsToDisplay[indexCalendar.calendar2].year}
+              month={allMonthsToDisplay[indexCalendar.calendar2].month}
+              calendar={"calendar2"}
+              moveCalendar={moveCalendar}
+            />
+          </div>
+        )}
       </CalendarProvider>
     </div>
   );

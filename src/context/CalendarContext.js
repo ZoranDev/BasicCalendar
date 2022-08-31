@@ -18,35 +18,22 @@ export const CalendarProvider = ({ children }) => {
       parseInt(e.target.textContent)
     ).getTime();
 
-    // If return date less then pickup date
-    if (clickedDate < selectedDates.date1) {
+    // If user didn't click any date or clicked date is date before date1 or if we have both dates
+    if (
+      (!selectedDates.date1 && !selectedDates.date2) ||
+      clickedDate < selectedDates.date1 ||
+      (selectedDates.date1 && selectedDates.date2)
+    ) {
       setSelectedDates({
         date1: clickedDate,
         date2: null,
       });
     } else {
-      if (!selectedDates.date1 && !selectedDates.date2) {
-        setSelectedDates({
-          date1: clickedDate,
-          date2: null,
-        });
-      } else if (selectedDates.date1 && !selectedDates.date2) {
-        setSelectedDates({
-          ...selectedDates,
-          date2: clickedDate,
-        });
-      } else {
-        setSelectedDates({
-          date1: clickedDate,
-          date2: null,
-        });
-      }
+      setSelectedDates({
+        ...selectedDates,
+        date2: clickedDate,
+      });
     }
-  };
-
-  // moveCalendar function
-  const moveCalendar = (e) => {
-    console.log("pomjeri kalendar");
   };
 
   return (
@@ -54,7 +41,6 @@ export const CalendarProvider = ({ children }) => {
       value={{
         selectedDates,
         handleClick,
-        moveCalendar,
       }}
     >
       {children}
