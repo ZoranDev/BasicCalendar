@@ -1,25 +1,29 @@
 import DayBtn from "./DayBtn";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
-const Calendar = ({ year, month, calendar, moveCalendar }) => {
-  // nisi makao promjenljive van Calendar komponente
+// Months
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
-  // Months
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
+const Calendar = ({
+  year,
+  month,
+  calendar,
+  moveCalendarRight,
+  moveCalendarLeft,
+}) => {
   // get number of days for specific month and year
   const daysInMonth = (year, month) => {
     return new Date(year, month + 1, 0).getDate();
@@ -34,16 +38,13 @@ const Calendar = ({ year, month, calendar, moveCalendar }) => {
   // Date - between 1 and length of month
   let date = 1;
 
-  //onClick function
-  const onClick = () => moveCalendar(calendar);
-
   return (
     <div className="h-[300px] mb-3 sm:ml-3 sm:mr-3">
       <div className="flex justify-center items-center text-xl mb-3 relative">
         {calendar === "calendar1" && (
           <FaAngleLeft
             className="text-xl absolute left-0 hover:scale-110 cursor-pointer "
-            onClick={onClick}
+            onClick={moveCalendarLeft}
           />
         )}
 
@@ -53,7 +54,7 @@ const Calendar = ({ year, month, calendar, moveCalendar }) => {
         {calendar === "calendar2" && (
           <FaAngleRight
             className="text-xl absolute right-0 hover:scale-110 cursor-pointer "
-            onClick={onClick}
+            onClick={moveCalendarRight}
           />
         )}
       </div>
@@ -81,7 +82,14 @@ const Calendar = ({ year, month, calendar, moveCalendar }) => {
                       return <td key={index}></td>;
                     } else {
                       date = date + 1;
-                      return <DayBtn key={index} date={date - 1} year={year} month={month} />;
+                      return (
+                        <DayBtn
+                          key={index}
+                          date={date - 1}
+                          year={year}
+                          month={month}
+                        />
+                      );
                     }
                   })}
                 </tr>
@@ -92,7 +100,14 @@ const Calendar = ({ year, month, calendar, moveCalendar }) => {
                   {[1, 2, 3, 4, 5, 6, 7].map((day, index) => {
                     if (date <= currentMonthDays) {
                       date = date + 1;
-                      return <DayBtn key={index} date={date - 1} year={year} month={month} />;
+                      return (
+                        <DayBtn
+                          key={index}
+                          date={date - 1}
+                          year={year}
+                          month={month}
+                        />
+                      );
                     } else {
                       date++;
                       return <td key={index}></td>;

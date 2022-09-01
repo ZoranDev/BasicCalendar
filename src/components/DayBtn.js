@@ -15,12 +15,20 @@ const DayBtn = ({ date, year, month }) => {
   const [disabled, setDisabled] = useState(false);
   // DayBtn class state
   const [btnClass, setBtnClass] = useState("");
+  // DayBtnTime state
+  const [dayBtnTime, setDayBtnTime] = useState(
+    new Date(year, month, date).getTime()
+  );
+
+  // Use effect function
+  useEffect(() => {
+    isDisabled();
+    getClass();
+    setDayBtnTime(new Date(year, month, date).getTime());
+  });
 
   let pickupDate = selectedDates.date1;
   let returnDate = selectedDates.date2;
-
-  //ovo bih isto radio sa useEffect jer ako ti se year, month, date updatuje onda ce odje ostati prosla vrijednost
-  let dayBtnTime = new Date(year, month, date).getTime();
 
   // onClick function
   const onClick = (e) => handleClick(year, month, e);
@@ -35,27 +43,14 @@ const DayBtn = ({ date, year, month }) => {
 
   // getClass function
   const getClass = () => {
-    //odje ponovo return ne radis i ovaj setBtnClass na liniji 42 je na pogresno mjesto
-
-    if (disabled) {
-      setBtnClass("w-full h-full  bg-slate-100 text-slate-400");
-    } else {
-      setBtnClass("w-full h-full cursor-pointer hover:bg-slate-100");
-      if (dayBtnTime === pickupDate || returnDate === dayBtnTime) {
-        setBtnClass("w-full h-full cursor-pointer bg-green-500");
-      }
-      if (dayBtnTime > pickupDate && dayBtnTime < returnDate) {
-        setBtnClass("w-full h-full cursor-pointer bg-green-200");
-      }
-    }
+    if (dayBtnTime === pickupDate || returnDate === dayBtnTime)
+      return setBtnClass("w-full h-full cursor-pointer bg-green-500");
+    if (dayBtnTime > pickupDate && dayBtnTime < returnDate)
+      return setBtnClass("w-full h-full cursor-pointer bg-green-200");
+    if (disabled)
+      return setBtnClass("w-full h-full  bg-slate-100 text-slate-400");
+    return setBtnClass("w-full h-full cursor-pointer hover:bg-slate-100");
   };
-
-  // Use effect function
-  useEffect(() => {
-    //ovo pomjeri gore, obicno odma posle useState definisanje stavljas useEffect da znas odma sta se mijenja
-    isDisabled();
-    getClass();
-  });
 
   return (
     <td className="text-xl w-10 h-10 text-center">
