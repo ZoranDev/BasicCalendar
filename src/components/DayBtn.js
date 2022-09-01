@@ -18,6 +18,8 @@ const DayBtn = ({ date, year, month }) => {
 
   let pickupDate = selectedDates.date1;
   let returnDate = selectedDates.date2;
+
+  //ovo bih isto radio sa useEffect jer ako ti se year, month, date updatuje onda ce odje ostati prosla vrijednost
   let dayBtnTime = new Date(year, month, date).getTime();
 
   // onClick function
@@ -33,6 +35,8 @@ const DayBtn = ({ date, year, month }) => {
 
   // getClass function
   const getClass = () => {
+    //odje ponovo return ne radis i ovaj setBtnClass na liniji 42 je na pogresno mjesto
+
     if (disabled) {
       setBtnClass("w-full h-full  bg-slate-100 text-slate-400");
     } else {
@@ -48,6 +52,7 @@ const DayBtn = ({ date, year, month }) => {
 
   // Use effect function
   useEffect(() => {
+    //ovo pomjeri gore, obicno odma posle useState definisanje stavljas useEffect da znas odma sta se mijenja
     isDisabled();
     getClass();
   });

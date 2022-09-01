@@ -2,6 +2,8 @@ import { CalendarProvider } from "./context/CalendarContext";
 import Calendar from "./components/Calendar";
 import { useState, useEffect } from "react";
 
+//poredjaj ovo da valja prvo je import iz react
+
 function App() {
   // Treba dobiti niz na osnovu kojeg ce se prikazivati kalendari
   const [indexCalendar, setIndexCalendar] = useState({
@@ -17,6 +19,8 @@ function App() {
     return Array(12 - new Date().getMonth() + 12)
       .fill(null)
       .map((u, i) => {
+        //koristi ? i : a ne if i else i onda smanjujes kolicinu koda
+
         if (i < 12 - new Date().getMonth()) {
           return {
             year: new Date().getFullYear(),
@@ -38,6 +42,8 @@ function App() {
 
   //moveCalendar
   const moveCalendar = (calendar) => {
+    //kreiraj object koja ima calendar1 i calendar 2 i onda zovi samo jednom setIndexCalendar
+
     if (calendar === "calendar1") {
       if (indexCalendar.calendar1 > 0) {
         setIndexCalendar({
