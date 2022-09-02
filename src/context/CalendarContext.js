@@ -1,4 +1,4 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useEffect } from "react";
 
 const calendarContext = createContext();
 
@@ -8,6 +8,14 @@ export const CalendarProvider = ({ children }) => {
     date1: null,
     date2: null,
   });
+
+  // useEffect
+  useEffect(() => {
+    selectedDates.date1 && selectedDates.date2 && setShowCalendar(false);
+  }, [selectedDates.date1, selectedDates.date2]);
+
+  // Show hide calendar
+  const [showCalendar, setShowCalendar] = useState(false);
 
   // handle click function
   const handleClick = (year, month, e) => {
@@ -36,11 +44,18 @@ export const CalendarProvider = ({ children }) => {
     }
   };
 
+  //pickDates
+  const pickDates = () => {
+    setShowCalendar(!showCalendar);
+  };
+
   return (
     <calendarContext.Provider
       value={{
         selectedDates,
+        showCalendar,
         handleClick,
+        pickDates,
       }}
     >
       {children}
